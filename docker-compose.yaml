@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  golang:
+    build: .
+    ports:
+      - "8090:8090"
+  swagger:
+    image: swaggerapi/swagger-ui
+    container_name: swagger_ui_container
+    ports:
+      - "8900:8090"
+    volumes:
+      - ./swagger-doc:/usr/share/nginx/html/doc
+    environment:
+      API_URL: doc/openapi.yaml
+      

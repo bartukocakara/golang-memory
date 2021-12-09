@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  title: Golang Memory API
+  description: Key value data store API
+  contact:
+    email: eyuparslana@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+  version: 1.0.0
+servers:
+  - url: http://localhost:8090
+tags:
+  - name: Golang Memory
+    description: Key value data store API endpoints.
+paths:
+  /:
+    get:
+      tags:
+        - Golang Memory
+      summary: Returns all data
+      description: Home returns all data contained in DB in key value format.
+      responses:
+        "200":
+          description: Saved data is returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  golang: programming
+                  backend: developer
+                items:
+                  $ref: '#/components/schemas/HomeResponse'
+                x-content-type: application/json
+  /set:
+    post:
+      tags:
+        - Golang Memory
+      summary: Set key and value
+      description: Set saves the 'key' and 'value' information of the query into DB.
+      parameters:
+        - name: key
+          in: body
+          description: key of data to be recorded
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: value
+          in: body
+          description: the value of the data to be recorded
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        "201":
+          description: response when data stored.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  result: The value 'programming' is stored with the key 'golang'.
+                items:
+                  $ref: '#/components/schemas/SuccessResponse'
+                x-content-type: application/json
+        "400":
+          description: response when request is wrong
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  error: The 'key' is required.
+                items:
+                  $ref: '#/components/schemas/ErrResponse'
+                x-content-type: application/json
+  /get:
+    get:
+      tags:
+        - Golang Memory
+      summary: Get value by key
+      description: Get returns the value corresponding to 'key' in DB.
+      parameters:
+        - name: key
+          in: query
+          description: key of recorded data
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: response when data was found.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  result: programming
+                items:
+                  $ref: '#/components/schemas/SuccessResponse'
+                x-content-type: application/json
+        "400":
+          description: response when request is wrong
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  error: The 'key' is required.
+                items:
+                  $ref: '#/components/schemas/ErrResponse'
+                x-content-type: application/json
+        "404":
+          description: response when a request for a value that is not in the DB is
+            received.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  error: The key 'golang' could not be found.
+                items:
+                  $ref: '#/components/schemas/ErrResponse'
+                x-content-type: application/json
+  /flush:
+    get:
+      tags:
+        - Golang Memory
+      summary: Delete all data
+      description: Flush deletes all data in DB.
+      responses:
+        "204":
+          description: response when all data deleted.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SuccessResponse'
+                x-content-type: application/json
+components:
+  schemas:
+    HomeResponse:
+      type: object
+      additionalProperties:
+        type: string
+    SuccessResponse:
+      type: object
+      properties:
+        result:
+          type: string
+          description: result
+      example:
+        result: result
+    ErrResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: error
