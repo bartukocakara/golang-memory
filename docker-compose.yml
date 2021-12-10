@@ -5,6 +5,18 @@ services:
     build: .
     ports:
       - "8090:8090"
+  db:
+    image: mysql:8
+    container_name: go_mysql
+    restart: always
+    volumes:
+      - ./data/go_memory:var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWOR=123456
+      - MYSQL_DATABASE=golang_memory
+
   swagger:
     image: swaggerapi/swagger-ui
     container_name: swagger_ui_container
