@@ -4,6 +4,10 @@
 git clone https://github.com/bartukocakara/Golang-memory.git
 ```
 
+# Local
+````shell
+air.exe
+````
 # Docker
 
 ````shell

@@ -2,6 +2,7 @@ version: "3.3"
 services:
   golang-memory:
     build: .
+    restart: unless-stopped
     ports:
       - "8080:8080"
   swagger-ui:
