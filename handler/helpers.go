@@ -10,7 +10,7 @@ func RecoverPanic(r *http.Request, response *ApiResponse) {
 	if rec := recover(); rec != nil {
 		logger.Error.Printf("[RECOVERED PANIC] %+v", rec)
 	}
-	logger.Info.Printf("dadasdsadas %s %s [Rsp: {%+v}]", r.Method, r.URL.Path, response)
+	logger.Info.Printf("Received %s %s [Rsp: {%+v}]", r.Method, r.URL.Path, response)
 }
 
 func StoreData(key, value string) {
