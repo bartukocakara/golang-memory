@@ -1,23 +1,23 @@
 openapi: 3.0.0
 info:
-  title: Golang Memory API
+  title: golang-memory API
   description: Key value data store API
   contact:
-    email: eyuparslana@gmail.com
+    email: kocakarabartu@gmail.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0
   version: 1.0.0
 servers:
-  - url: http://localhost:8090
+  - url: http://localhost:8080
 tags:
-  - name: Golang Memory
+  - name: golang-memory
     description: Key value data store API endpoints.
 paths:
   /:
     get:
       tags:
-        - Golang Memory
+        - golang-memory
       summary: Returns all data
       description: Home returns all data contained in DB in key value format.
       responses:
@@ -36,26 +36,22 @@ paths:
   /set:
     post:
       tags:
-        - Golang Memory
+        - golang-memory
       summary: Set key and value
       description: Set saves the 'key' and 'value' information of the query into DB.
-      parameters:
-        - name: key
-          in: body
-          description: key of data to be recorded
-          required: true
-          style: form
-          explode: true
-          schema:
-            type: string
-        - name: value
-          in: body
-          description: the value of the data to be recorded
-          required: true
-          style: form
-          explode: true
-          schema:
-            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+              example:
+                key: "test"
+                value: Go Lang
       responses:
         "201":
           description: response when data stored.
@@ -64,7 +60,7 @@ paths:
               schema:
                 type: array
                 example:
-                  result: The value 'programming' is stored with the key 'golang'.
+                  result: The value 'test' is stored with the key 'go'.
                 items:
                   $ref: '#/components/schemas/SuccessResponse'
                 x-content-type: application/json
@@ -82,7 +78,7 @@ paths:
   /get:
     get:
       tags:
-        - Golang Memory
+        - golang-memory
       summary: Get value by key
       description: Get returns the value corresponding to 'key' in DB.
       parameters:
@@ -130,9 +126,9 @@ paths:
                   $ref: '#/components/schemas/ErrResponse'
                 x-content-type: application/json
   /flush:
-    get:
+    delete:
       tags:
-        - Golang Memory
+        - golang-memory
       summary: Delete all data
       description: Flush deletes all data in DB.
       responses:

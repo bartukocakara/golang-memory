@@ -10,4 +10,4 @@ git clone https://github.com/bartukocakara/Golang-memory.git
 docker-compose up -d
 ````
 
-Go to  `localhost:8900` for swagger page.Then you can check apis.
+Go to  `localhost:8001` for swagger page.Then you can check apis.

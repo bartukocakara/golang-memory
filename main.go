@@ -2,23 +2,24 @@ package main
 
 import (
 	"fmt"
-	"golang-memory/route"
-	"log"
+	"net/http"
 
-	"github.com/joho/godotenv"
+	"golang-memory/config"
+	"golang-memory/handler"
+	"golang-memory/job"
+	"golang-memory/logger"
 )
 
-func loadenv() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-	}
-}
-
 func main() {
-	fmt.Println("Main Application Starts")
-	//Loading Environmental Variable
-	loadenv()
-
-	log.Fatal(route.RunAPI(":8090"))
-
+	job.Startjob()
+	job.CheckExistingData()
+	mux := http.NewServeMux()
+	
+	mux.HandleFunc("/", handler.Home)
+	mux.HandleFunc("/set", handler.Set)
+	mux.HandleFunc("/get", handler.Get)
+	mux.HandleFunc("/flush", handler.Flush)
+	logger.Info.Println("Server starting...")
+	logger.Info.Printf("Server started at %s", config.API_PORT)
+	logger.Fatal.Println(http.ListenAndServe(fmt.Sprintf(":%s", config.API_PORT), mux))
 }

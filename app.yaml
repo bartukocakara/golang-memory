@@ -1,0 +1,9 @@
+# [START runtime]
+runtime: custom
+env: flex
+env_variables:
+  API_PORT: 8080
+  EXPORT_FILE_PATH: ./output
+  RECORD_FREQ: 10
+main: .
+# [END runtime]

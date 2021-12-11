@@ -1,0 +1,15 @@
+version: "3.3"
+services:
+  golang-memory:
+    build: .
+    ports:
+      - "8080:8080"
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-go
+    ports:
+      - "8001:8080"
+    volumes:
+      - ./swagger:/usr/share/nginx/html/swagger
+    environment:
+      API_URL: swagger/swagger.yaml
