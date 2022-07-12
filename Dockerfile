@@ -8,6 +8,5 @@ ENV RECORD_FREQ=10
 WORKDIR /app
 COPY . ./
 RUN go build -o /golang-memory
-RUN air.exe
 
 CMD [ "/golang-memory" ]
